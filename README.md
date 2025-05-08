@@ -12,7 +12,7 @@ Instead of forwarding SMS messages directly via SMS, this script sends them over
 
 ## Prerequisites
 
-Make sure the following Termux components are installed and properly configured on your Android device:
+Make sure the following Termux components are installed and properly configured on your Android device. Additionally, grant Termux:API the necessary permissions for Contacts and SMS.
 
 * [Termux](https://wiki.termux.com/wiki/Installation)
 * [Termux\:API](https://wiki.termux.com/wiki/Termux:API)
@@ -83,7 +83,7 @@ Run the script:
 python3 main.py
 ```
 
-> The script only forwards **new** SMS messages received after it starts. Messages already in your inbox will be ignored.
+The script will only forward **new** SMS messages received after it starts. Messages that are already in your inbox will not be forwarded. You might want to send a test SMS to your phone to confirm everything is working.
 
 ---
 
@@ -104,7 +104,7 @@ To make the script run automatically at boot using Termux\:Boot:
    nano start-sms-forward
    ```
 
-3. Add the following:
+3. Add the following contents to the script:
 
    ```bash
    #!/data/data/com.termux/files/usr/bin/sh
@@ -112,7 +112,7 @@ To make the script run automatically at boot using Termux\:Boot:
    nohup bash -c 'cd ~/SMS-Forward && python3 main.py' &
    ```
 
-4. Make it executable:
+4. Make the script executable:
 
    ```bash
    chmod +x start-sms-forward
