@@ -32,10 +32,14 @@ def send_email(subject: str, content: str) -> None:
     password = config["password"]
     recipient = config["recipient"]
 
+    # Accept either a single email address (string) or a list of addresses
+    if isinstance(recipient, str):
+        recipient = [recipient]
+
     # Compose the plain text email message
     msg = MIMEText(content, "plain")
     msg["From"] = sender
-    msg["To"] = recipient
+    msg["Bcc"] = ", ".join(recipient)
     msg["Subject"] = subject
 
     # Send the email using SMTP over SSL
@@ -87,7 +91,7 @@ def forward_sms_via_email(messages: list[dict]) -> None:
 
 def main() -> None:
     # Interval for checking new messages
-    SLEEP_INTERVAL = 45
+    SLEEP_INTERVAL = 15
 
     # Notification IDs for Termux
     # These IDs ensure that new notifications of the same type replace older ones
